@@ -1,0 +1,41 @@
+application: par
+
+default_versions:
+  # Specify the version of platform-helper your configuration is designed to work with
+  # Get the version by running `platform-helper --version`
+  platform-helper: 13.2.0
+
+environments:
+  dev:
+    accounts:
+      # The AWS account your application will be deployed to
+      deploy:
+        name: "primary-authority-register"
+        id: "970547347857"
+      # The AWS account where your application's DNS lives
+      dns:
+        name: "dev"
+        id: "011755346992"
+    # The name of the VPC your environment should be deployed into
+    vpc: primary-authority-register
+
+extensions:
+  # Add an application load balancer for each environment to route traffic to the application
+  par-alb:
+    type: alb
+    # This allows you to configure the application load balancer for each environment
+    environments:
+      dev:
+        cdn_domains_list:
+          # The domain name for your application's environment
+          dev.par.uktrade.digital:
+            # Just put these next two lines in for now, we plan to make changes so that they are not needed
+            - internal
+            - par.uktrade.digital
+  bucket:
+    type: s3
+    services:
+      - web
+    environments:
+      dev:
+        bucket_name: par-dev
