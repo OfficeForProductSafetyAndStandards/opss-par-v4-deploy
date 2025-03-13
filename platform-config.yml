@@ -1,41 +1,94 @@
 application: par
-
+ 
 default_versions:
   # Specify the version of platform-helper your configuration is designed to work with
   # Get the version by running `platform-helper --version`
   platform-helper: 13.2.0
-
+ 
+deploy_repository: OfficeForProductSafetyAndStandards/opss-par-v4-deploy
+ 
 environments:
-  dev:
+  "*":
     accounts:
-      # The AWS account your application will be deployed to
       deploy:
         name: "primary-authority-register"
         id: "970547347857"
-      # The AWS account where your application's DNS lives
       dns:
         name: "dev"
         id: "011755346992"
-    # The name of the VPC your environment should be deployed into
     vpc: primary-authority-register
-
+  dev:
+  prod:
+    accounts:
+      # The AWS account your application will be deployed to
+      deploy:
+        name: "primary-authority-register-prod"
+        id: "597088022393"
+      # The AWS account where your application's DNS lives
+      dns:
+        name: "live"
+        id: "684092750218"
+    # The name of the VPC your environment should be deployed into
+    vpc: primary-authority-register-prod
+ 
+environment_pipelines:
+  main:
+    account: primary-authority-register
+    branch: main
+    slack_channel: "/codebuild/slack_oauth_channel"
+    trigger_on_push: true
+    pipeline_to_trigger: prod-main
+    environments:
+      dev:      
+  prod-main:
+    account: primary-authority-register-prod
+    branch: main
+    slack_channel: "/codebuild/slack_oauth_channel"
+    trigger_on_push: false
+    environments:
+      prod:
+        requires_approval: true
+ 
+codebase_pipelines:
+  par:
+    repository: OfficeForProductSafetyAndStandards/opss-par-v4
+    services:
+      - run_group_1:
+          - web
+          - api
+    pipelines:
+      - name: develop
+        branch: develop
+        environments:
+          - name: dev
+      - name: tagged
+        tag: true
+        environments:
+          - name: prod
+ 
 extensions:
   # Add an application load balancer for each environment to route traffic to the application
-  par-alb:
+  alb:
     type: alb
     # This allows you to configure the application load balancer for each environment
     environments:
       dev:
         cdn_domains_list:
-          # The domain name for your application's environment
-          dev.par.uktrade.digital:
-            # Just put these next two lines in for now, we plan to make changes so that they are not needed
-            - internal
-            - par.uktrade.digital
+          dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
+          # # The domain name for your application's environment
+          # dev.par.uktrade.digital:
+          #   # Just put these next two lines in for now, we plan to make changes so that they are not needed
+          #   - internal
+          #   - par.uktrade.digital
+      prod:
+        cdn_domains_list:
+          primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
+          
   bucket:
     type: s3
     services:
       - web
+      - api
     environments:
       dev:
         bucket_name: par-dev
