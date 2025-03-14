@@ -75,16 +75,11 @@ extensions:
     environments:
       dev:
         cdn_domains_list:
-          dev.par.uktrade.digital: ["internal", "par.uktrade.digital", "enable_record"]
-          # # The domain name for your application's environment
-          # dev.par.uktrade.digital:
-          #   # Just put these next two lines in for now, we plan to make changes so that they are not needed
-          #   - internal
-          #   - par.uktrade.digital
+          dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]          
       prod:
         cdn_domains_list:
-          par.uktrade.digital: ["internal", "par.uktrade.digital", "enable_record"]
-          
+          primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
+
   bucket:
     type: s3
     services:
