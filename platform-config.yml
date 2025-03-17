@@ -86,5 +86,5 @@ extensions:
       - web
     environments:
       dev:
-        bucket_name: par-dev-bucket
+        bucket_name: par-dev-s3
  
