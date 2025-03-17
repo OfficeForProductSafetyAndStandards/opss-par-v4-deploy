@@ -18,6 +18,8 @@ environments:
         id: "011755346992"
     vpc: primary-authority-register
   dev:
+  test:
+  staging:
   prod:
     accounts:
       # The AWS account your application will be deployed to
@@ -55,12 +57,11 @@ codebase_pipelines:
     services:
       - run_group_1:
           - web
-          - api
     pipelines:
       - name: develop
         branch: develop
         environments:
-          - name: dev
+          - name: dev         
       - name: tagged
         tag: true
         environments:
@@ -74,21 +75,16 @@ extensions:
     environments:
       dev:
         cdn_domains_list:
-          dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
-          # # The domain name for your application's environment
-          # dev.par.uktrade.digital:
-          #   # Just put these next two lines in for now, we plan to make changes so that they are not needed
-          #   - internal
-          #   - par.uktrade.digital
+          dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]          
       prod:
         cdn_domains_list:
           primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
-          
+ 
   bucket:
     type: s3
     services:
       - web
-      - api
     environments:
       dev:
-        bucket_name: par-dev
+        bucket_name: par-dev-bucket
+ 
