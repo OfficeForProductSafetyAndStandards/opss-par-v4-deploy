@@ -58,8 +58,8 @@ codebase_pipelines:
       - run_group_1:
           - web
     pipelines:
-      - name: develop
-        branch: develop
+      - name: main
+        branch: main
         environments:
           - name: dev         
       - name: tagged
@@ -78,7 +78,7 @@ extensions:
           dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]          
       prod:
         cdn_domains_list:
-          primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
+          primary-authority-register.prod.uktrade.digital: ["internal", "primary-authority-register.prod.uktrade.digital", "enable_record"]
  
   bucket:
     type: s3
@@ -87,4 +87,6 @@ extensions:
     environments:
       dev:
         bucket_name: par-dev-s3
+      prod:
+        bucket_name: par-prod-s3
  

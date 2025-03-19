@@ -1,0 +1,49 @@
+# Read the full specification for the "Load Balanced Web Service" type at:
+# https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
+
+# Your service name will be used in naming resources like log groups, ECS services, etc.
+name: web
+type: Load Balanced Web Service
+
+image:
+  # The container image with your application's code on it
+  location: public.ecr.aws/uktrade/copilot-bootstrap:latest
+  # Port exposed on your container to route traffic to it
+  port: 8080
+
+sidecars:
+  # Nginx sidecar to route traffic to your application code
+  nginx:
+    image: public.ecr.aws/uktrade/nginx-dbt-platform:latest
+    port: 443
+
+http:
+  # Requests to this path will be forwarded to your service
+  # To match all requests you can use the "/" path
+  path: '/'
+  target_container: nginx
+
+# Number of CPU units for the task
+cpu: 256
+
+# Amount of memory in MiB used by the task
+memory: 1024
+
+# Number of tasks that should be running in your service
+count: 1
+
+network:
+  # Enable Service Connect for intra-environment traffic between services, including ECS health status checks
+  connect: true
+  vpc:
+    # Do not expose containers on public IP addresses
+    placement: 'private'
+
+# Environment specific settings, can be new or override the configuration above
+environments:
+  dev:
+    http:
+      alb: arn:aws:elasticloadbalancing:eu-west-2:970547347857:loadbalancer/app/par-dev/cd2a0095af892f58
+      alias:
+        - internal.dev.par.uktrade.digital
+        - dev.primary-authority-register.uktrade.digital
