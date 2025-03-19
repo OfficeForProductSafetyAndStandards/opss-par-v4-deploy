@@ -54,6 +54,7 @@ environment_pipelines:
 codebase_pipelines:
   par:
     repository: OfficeForProductSafetyAndStandards/opss-par-v4
+    slack_channel: /codebuild/slack_oauth_channel
     services:
       - run_group_1:
           - web
