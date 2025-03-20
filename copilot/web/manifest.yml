@@ -45,5 +45,4 @@ environments:
     http:
       alb: arn:aws:elasticloadbalancing:eu-west-2:970547347857:loadbalancer/app/par-dev/cd2a0095af892f58
       alias:
-        - internal.dev.par.uktrade.digital
         - dev.primary-authority-register.uktrade.digital
