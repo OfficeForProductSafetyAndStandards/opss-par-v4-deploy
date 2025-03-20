@@ -2,7 +2,7 @@
 # https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
 
 # Your service name will be used in naming resources like log groups, ECS services, etc.
-name: web
+name: api
 type: Load Balanced Web Service
 
 image:
@@ -50,4 +50,4 @@ environments:
     http:
       alb: arn:aws:elasticloadbalancing:eu-west-2:970547347857:loadbalancer/app/par-dev/cd2a0095af892f58
       alias:
-        - dev.primary-authority-register.uktrade.digital
+        - api.dev.primary-authority-register.uktrade.digital

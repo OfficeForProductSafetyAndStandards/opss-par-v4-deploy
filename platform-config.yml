@@ -57,6 +57,7 @@ codebase_pipelines:
     slack_channel: /codebuild/slack_oauth_channel
     services:
       - run_group_1:
+          - api
           - web
     pipelines:
       - name: main
@@ -77,10 +78,13 @@ extensions:
       dev:
         cdn_domains_list:
           dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]          
+          api.dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
+        additional_address_list: [ internal.api ]
       prod:
         cdn_domains_list:
           primary-authority-register.prod.uktrade.digital: ["internal", "primary-authority-register.prod.uktrade.digital", "enable_record"]
- 
+          api.primary-authority-register.prod.uktrade.digital: ["internal", "primary-authority-register.prod.uktrade.digital", "enable_record"]
+        additional_address_list: [ internal.api ]
   bucket:
     type: s3
     services:
@@ -90,4 +94,15 @@ extensions:
         bucket_name: par-dev-s3
       prod:
         bucket_name: par-prod-s3
+
+  par-postgres:
+    type: postgres
+    version: 16
+    environments:
+      "*":
+        plan: tiny
+      prod:
+        plan: small-ha
+        deletion_protection: true
+        deletion_policy: Retain
  
