@@ -1,0 +1,7 @@
+terraform/environments/
+terraform/environment-pipelines/
+terraform/codebase-pipelines/
+
+
+.platform-helper-config-cache.yml
+.DS_Store
