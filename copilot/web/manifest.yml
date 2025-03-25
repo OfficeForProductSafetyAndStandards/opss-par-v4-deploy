@@ -7,7 +7,8 @@ type: Load Balanced Web Service
 
 image:
   # The container image with your application's code on it
-  location: public.ecr.aws/uktrade/copilot-bootstrap:latest
+  #location: public.ecr.aws/uktrade/copilot-bootstrap:latest
+  location: 970547347857.dkr.ecr.eu-west-2.amazonaws.com/par/web:${IMAGE_TAG}
   # Port exposed on your container to route traffic to it
   port: 8080
 
@@ -43,6 +44,14 @@ network:
 
 secrets:
   RDS_POSTGRES_CREDENTIALS: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/PAR_POSTGRES_APPLICATION_USER
+  ASPNETCORE_ENVIRONMENT: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/ASPNETCORE_ENVIRONMENT
+  JwtAuth__SecurityKey: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/JwtAuth__SecurityKey
+  OpenIdConnectAuth_Providers_StaffSSO_ProviderKey: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/OpenIdConnectAuth_Providers_StaffSSO_ProviderKey
+  OpenIdConnectAuth__Providers__OneLogin__ClientId: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/OpenIdConnectAuth__Providers__OneLogin__ClientId
+  OpenIdConnectAuth__Providers__OneLogin__RsaPrivateKey: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/OpenIdConnectAuth__Providers__OneLogin__RsaPrivateKey
+  OpenIdConnectAuth__Providers__StaffSSO__ClientId: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/OpenIdConnectAuth__Providers__StaffSSO__ClientId
+  OpenIdConnectAuth__Providers__StaffSSO__ClientSecret: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/OpenIdConnectAuth__Providers__StaffSSO__ClientSecret
+
 
 # Environment specific settings, can be new or override the configuration above
 environments:

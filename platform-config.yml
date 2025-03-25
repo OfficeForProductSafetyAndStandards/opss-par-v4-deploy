@@ -52,12 +52,11 @@ environment_pipelines:
         requires_approval: true
  
 codebase_pipelines:
-  par:
+  web:
     repository: OfficeForProductSafetyAndStandards/opss-par-v4
-    slack_channel: /codebuild/slack_oauth_channel
+    #slack_channel: /codebuild/slack_oauth_channel
     services:
-      - run_group_1:
-          - api
+      - concurrent_deploy_group_1:
           - web
     pipelines:
       - name: main
@@ -68,6 +67,21 @@ codebase_pipelines:
         tag: true
         environments:
           - name: prod
+  api:
+    repository: OfficeForProductSafetyAndStandards/opss-par-v4
+    #slack_channel: /codebuild/slack_oauth_channel
+    services:
+      - concurrent_deploy_group_1:
+          - api
+    pipelines:
+      - name: main
+        branch: main
+        environments:
+          - name: dev         
+      - name: tagged
+        tag: true
+        environments:
+        - name: prod
  
 extensions:
   # Add an application load balancer for each environment to route traffic to the application
