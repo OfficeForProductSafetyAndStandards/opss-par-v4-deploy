@@ -17,12 +17,33 @@ sidecars:
   nginx:
     image: public.ecr.aws/uktrade/nginx-dbt-platform:latest
     port: 443
+  permissions:
+    image: public.ecr.aws/docker/library/alpine:latest
+    command:
+      - chmod
+      - -R
+      - a+w
+      - /tmp
+    essential: false
+    mount_points:
+      - source_volume: temporary-fs
+        path: /tmp
+        read_only: false
 
 http:
   # Requests to this path will be forwarded to your service
   # To match all requests you can use the "/" path
   path: '/'
   target_container: nginx
+  healthcheck:
+    path: '/'
+    port: 8080
+    success_codes: '200,302'
+    healthy_threshold: 3
+    unhealthy_threshold: 3
+    # interval: 35s
+    # timeout: 30s
+    grace_period: 30s
 
 # Number of CPU units for the task
 cpu: 256
