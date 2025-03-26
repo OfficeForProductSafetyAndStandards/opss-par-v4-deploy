@@ -17,6 +17,8 @@ sidecars:
   nginx:
     image: public.ecr.aws/uktrade/nginx-dbt-platform:latest
     port: 443
+    variables:
+      ALLOW_WEBSOCKETS: true
   permissions:
     image: public.ecr.aws/docker/library/alpine:latest
     command:
@@ -64,7 +66,6 @@ network:
     placement: 'private'
 
 secrets:
-  RDS_POSTGRES_CREDENTIALS: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/PAR_POSTGRES_APPLICATION_USER
   ASPNETCORE_ENVIRONMENT: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/ASPNETCORE_ENVIRONMENT
   JwtAuth__SecurityKey: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/JwtAuth__SecurityKey
   OpenIdConnectAuth_Providers_StaffSSO_ProviderKey: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/OpenIdConnectAuth_Providers_StaffSSO_ProviderKey
