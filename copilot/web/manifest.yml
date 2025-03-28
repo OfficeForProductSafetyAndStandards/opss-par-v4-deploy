@@ -37,6 +37,7 @@ http:
   # To match all requests you can use the "/" path
   path: '/'
   target_container: nginx
+  stickiness: true
   healthcheck:
     path: '/'
     port: 8080

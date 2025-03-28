@@ -62,7 +62,7 @@ codebase_pipelines:
       - name: main
         branch: main
         environments:
-          - name: dev         
+          - name: dev
       - name: tagged
         tag: true
         environments:
@@ -77,7 +77,7 @@ codebase_pipelines:
       - name: main
         branch: main
         environments:
-          - name: dev         
+          - name: dev
       - name: tagged
         tag: true
         environments:
@@ -91,7 +91,7 @@ extensions:
     environments:
       dev:
         cdn_domains_list:
-          dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]          
+          dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
           api.dev.primary-authority-register.uktrade.digital: ["internal", "primary-authority-register.uktrade.digital", "enable_record"]
         additional_address_list: [ internal.api ]
       prod:
